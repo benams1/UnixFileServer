@@ -19,7 +19,7 @@
 #define IP_ADDR 0x7f000001
 #define QUEUE_LEN 20
 
-int main(void)
+int main(int argc, char* argv[])
 {
 	int listenS = socket(AF_INET, SOCK_STREAM, 0);
 	int socket_opt_val = 1;
@@ -79,7 +79,9 @@ int main(void)
 			perror("Could not receive filename");
 			exit(1);
 		}
-		strcat(path,"files/");
+		if(argc!=1){
+			strcat(path,argv[1]);
+		}
 		strcat(path,filename);
 		if (stat(path, &st) < 0)
 		{
@@ -126,7 +128,9 @@ int main(void)
 			perror("Could not receive filename");
 			exit(1);
 		}
-		strcat(path,"files/");
+		if(argc!=1){
+			strcat(path,argv[1]);
+		}
 		strcat(path,filename);
 		recv(newfd,&fileSize,sizeof(fileSize),0);
 		//if file size less then zero
